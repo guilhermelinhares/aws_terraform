@@ -3,5 +3,5 @@ variable "region" {
 }
 
 variable "profile" {
-  default = "nonprod"
+  default = "noprod"
 }

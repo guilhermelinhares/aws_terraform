@@ -20,7 +20,3 @@ variable "vpc_main_private_cidr_a" {
 variable "vpc_main_private_cidr_b" {
   default = "10.0.2.0/24"
 }
-
-variable "name_security_group" {
-  default = "allow_traffic"
-}

@@ -26,3 +26,12 @@ variable "subnet_id" {
   description = "Subnet_ID"
   type        = string
 }
+
+variable "key_aws_instance" {
+  description = "Path ssh key"
+  default     = "ssh-gui" 
+}
+
+variable "count_instances" {
+  default = 2
+}

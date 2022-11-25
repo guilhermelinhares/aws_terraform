@@ -36,3 +36,6 @@ terraform.rc
 
 #Ignore Infracost File
 .infracost
+
+#Ignore ssh key
+*.pem

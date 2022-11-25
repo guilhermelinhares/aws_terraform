@@ -42,12 +42,16 @@
 
 #region
   /**
-  * Docs
-  * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#security_groups
-  * https://registry.terraform.io/modules/terraform-aws-modules/ec2-instance/aws/latest
+    * Docs
+    * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#security_groups
+    * https://registry.terraform.io/modules/terraform-aws-modules/ec2-instance/aws/latest
+    * https://developer.hashicorp.com/terraform/language/meta-arguments/count
+    * https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource
+    * https://developer.hashicorp.com/terraform/language/resources/provisioners/connection
+    * https://developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec
   **/
   resource "aws_instance" "aws_ec2" {
-    count = 2 //Create a two instances equals
+    count = var.count_instances //Create a number "var.count_instances" instances equals
   
     ami           = var.aim_aws_instance
     instance_type = var.instance_type_aws_instance
@@ -55,9 +59,68 @@
     associate_public_ip_address = true
     subnet_id              = var.subnet_id
     vpc_security_group_ids = [aws_security_group.allow_traffic.id]
-    
+    key_name = var.key_aws_instance
+
+    # Bootstrap script can run on any instance of the cluster
+    # So we just choose the number instances
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("${var.key_aws_instance}.pem")
+      host        = self.public_ip
+      timeout     = "5m"
+      # host        = element(self.*.public_ip,var.count_instances)
+    }
+
+    # Copies the file as the ubuntu user using SSH
+    provisioner "file" {
+      source      = "ansible/teste.yaml"
+      destination = "/home/ubuntu/teste.conf"     
+    }
+
+    provisioner "remote-exec" {
+      inline = [
+        "sudo apt update && sudo apt install -y ansible",
+        "sudo apt update && sudo apt install curl git unzip nginx -y",
+      ]
+    }
+
     tags = {
       Name = "terraform_ec2-${count.index}"
     }
   }
+#endregion
+
+#region Null_Resources
+  /**
+  * Docs
+
+  **/
+  # resource "null_resource" "wp" {
+  #   # Changes to any instance of the cluster requires re-provisioning
+  #   triggers = {
+  #     aws_ec2_ids = join(",", aws_instance.aws_ec2.*.id)
+  #   }
+  #   # Copies the file as the ubuntu user using SSH
+  #   provisioner "file" {
+  #     source      = "ansible/teste.yaml"
+  #     destination = "$HOME/teste.conf"
+  #     # Bootstrap script can run on any instance of the cluster
+  #     # So we just choose the number instances
+  #     connection {
+  #       type        = "ssh"
+  #       user        = "ubuntu"
+  #       private_key = file("${var.key_aws_instance}.pem")
+  #       host        = element(aws_instance.aws_ec2.*.public_ip,var.count_instances)
+  #     }
+  #   }
+
+  #   provisioner "remote-exec" {
+  #     inline = [
+  #       "sudo apt update && sudo apt install curl ansible git unzip -y",
+  #       "consul join ${aws_instance.aws_ec2.*.private_ip}",
+  #     ]
+  #   }
+
+  # }
 #endregion

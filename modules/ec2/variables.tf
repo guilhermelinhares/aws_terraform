@@ -1,6 +1,6 @@
 variable "aim_aws_instance" {
-  description = "Ubuntu Server 20.04 LTS (HVM), SSD Volume Type"
-  default = "ami-0149b2da6ceec4bb0"
+  description = "Canonical, Ubuntu, 20.04 LTS, amd64 focal image build on 2021-11-29"
+  default = "ami-04505e74c0741db8d"
 }
 
 variable "region" {

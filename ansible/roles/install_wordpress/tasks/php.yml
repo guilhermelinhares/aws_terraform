@@ -2,6 +2,7 @@
 - name: Install package php 7.4
   apt:
     name: "{{ pack }}"
+    update_cache: yes
     state: present
   vars:
     pack:

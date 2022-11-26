@@ -3,7 +3,7 @@
 # Doc https://docs.ansible.com/ansible-core/2.14/user_guide/playbooks_reuse_includes.html
 # https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
 - name: Include task list php
-  include_tasks: php.yaml
+  include_tasks: php.yml
 
 - name: Include task list nginx
   include_tasks: nginx.yml

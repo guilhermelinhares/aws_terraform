@@ -49,9 +49,11 @@
     * https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource
     * https://developer.hashicorp.com/terraform/language/resources/provisioners/connection
     * https://developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec
+    * https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu
+
   **/
   resource "aws_instance" "aws_ec2" {
-    count = var.count_instances //Create a number "var.count_instances" instances equals
+    count = var.count_instances # Create a number "var.count_instances" instances equals
   
     ami           = var.aim_aws_instance
     instance_type = var.instance_type_aws_instance
@@ -60,8 +62,7 @@
     subnet_id              = var.subnet_id
     vpc_security_group_ids = [aws_security_group.allow_traffic.id]
     key_name = var.key_aws_instance
-
-    # Bootstrap script can run on any instance of the cluster
+    # Bootstrap script can run on any instance of the aws_ec2
     # So we just choose the number instances
     connection {
       type        = "ssh"
@@ -74,11 +75,14 @@
     # Execute commands remote in server(s) 
     provisioner "remote-exec" {
       inline = [
-        "sudo apt-get update && sudo apt-get install ansible curl unzip -y",
-        "mkdir /home/ubuntu/ansible",
+        "sudo apt-get update",
+        "sudo apt-get install -y software-properties-common",
+        "sudo apt-add-repository --yes --update ppa:ansible/ansible",
+        "sudo apt install ansible -y",
+        "mkdir -p /home/ubuntu/ansible",
+        "sudo apt install curl unzip -y",
       ]
     }
-
     # Copies the file as the ubuntu user using SSH
     provisioner "file" {
       source      = var.source_ansible

@@ -1,0 +1,7 @@
+---
+  - name: "Install Wordpress"
+    hosts: localhost
+    become: yes
+
+    roles:
+      - install_wordpress

@@ -1,0 +1,19 @@
+---
+  - name: Extract and download wordpress
+    ansible.builtin.unarchive:
+      src: "{{ url_wp }}"
+      dest: "{{ dest_wp_file }}"
+      remote_src: yes
+
+  - name: Create permission wp {{ wp_path }}
+    ansible.builtin.file:
+      path: "{{ wp_path }}"
+      owner: www-data
+      group: www-data
+      mode: '0755'
+      recursive: yes
+  
+  - name: Change file wp-config
+    template:
+      src: wp-config.php.j2
+      dest: "{{ dest_wp_conf }}"

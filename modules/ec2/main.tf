@@ -69,58 +69,25 @@
       private_key = file("${var.key_aws_instance}.pem")
       host        = self.public_ip
       timeout     = "5m"
-      # host        = element(self.*.public_ip,var.count_instances)
+    }
+
+    # Execute commands remote in server(s) 
+    provisioner "remote-exec" {
+      inline = [
+        "sudo apt update && sudo apt install ansible -y",
+        "sudo apt update && sudo apt install curl unzip -y",
+        "mkdir /home/ubuntu/ansible",
+      ]
     }
 
     # Copies the file as the ubuntu user using SSH
     provisioner "file" {
-      source      = "ansible/teste.yaml"
-      destination = "/home/ubuntu/teste.conf"     
+      source      = var.source_ansible
+      destination = var.dest_ansible
     }
-
-    provisioner "remote-exec" {
-      inline = [
-        "sudo apt update && sudo apt install -y ansible",
-        "sudo apt update && sudo apt install curl git unzip nginx -y",
-      ]
-    }
-
+   
     tags = {
       Name = "terraform_ec2-${count.index}"
     }
   }
-#endregion
-
-#region Null_Resources
-  /**
-  * Docs
-
-  **/
-  # resource "null_resource" "wp" {
-  #   # Changes to any instance of the cluster requires re-provisioning
-  #   triggers = {
-  #     aws_ec2_ids = join(",", aws_instance.aws_ec2.*.id)
-  #   }
-  #   # Copies the file as the ubuntu user using SSH
-  #   provisioner "file" {
-  #     source      = "ansible/teste.yaml"
-  #     destination = "$HOME/teste.conf"
-  #     # Bootstrap script can run on any instance of the cluster
-  #     # So we just choose the number instances
-  #     connection {
-  #       type        = "ssh"
-  #       user        = "ubuntu"
-  #       private_key = file("${var.key_aws_instance}.pem")
-  #       host        = element(aws_instance.aws_ec2.*.public_ip,var.count_instances)
-  #     }
-  #   }
-
-  #   provisioner "remote-exec" {
-  #     inline = [
-  #       "sudo apt update && sudo apt install curl ansible git unzip -y",
-  #       "consul join ${aws_instance.aws_ec2.*.private_ip}",
-  #     ]
-  #   }
-
-  # }
 #endregion

@@ -1,0 +1,21 @@
+---
+  - name: Install Nginx
+    apt:
+      name: nginx
+      state: latest
+    update_cache: yes
+  
+  - name: Change Nginx file
+    template:
+      src: vhost.nginx.conf.j2
+      dest: "{{ dest_nginx_conf }}"
+
+  - name: Restarted nginx
+    service:
+      name: nginx
+      state: restarted
+  
+  - name: Enable nginx
+    service:
+      name: nginx
+      enabled: yes

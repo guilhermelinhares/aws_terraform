@@ -1,0 +1,7 @@
+---
+# vars file for install_wordpress
+dest_wp_file: /var/www/html
+url_wp: https://wordpress.org/latest.zip
+dest_nginx_conf: /etc/nginx/sites-enabled/default
+dest_wp_conf: /var/www/html/wordpress/wp-config.php
+wp_path: /var/www/html/wordpress

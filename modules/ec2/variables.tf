@@ -35,3 +35,13 @@ variable "key_aws_instance" {
 variable "count_instances" {
   default = 2
 }
+
+variable "source_ansible" {
+  description = "Source folder with content files ansible"
+  default = "ansible/"
+}
+
+variable "dest_ansible" {
+  description = "Destination folder in instance with files ansible"
+  default = "/home/ubuntu/ansible" 
+}

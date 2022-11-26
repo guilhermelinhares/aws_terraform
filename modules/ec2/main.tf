@@ -74,8 +74,7 @@
     # Execute commands remote in server(s) 
     provisioner "remote-exec" {
       inline = [
-        "sudo apt update && sudo apt install ansible -y",
-        "sudo apt update && sudo apt install curl unzip -y",
+        "sudo apt-get update && sudo apt-get install ansible curl unzip -y",
         "mkdir /home/ubuntu/ansible",
       ]
     }

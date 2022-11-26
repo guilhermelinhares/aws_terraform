@@ -1,5 +1,12 @@
 ---
 # tasks file for install_wordpress
-- include: php.yml
-- include: nginx.yml
-- include: wordpress.yml
+# Doc https://docs.ansible.com/ansible-core/2.14/user_guide/playbooks_reuse_includes.html
+# https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
+- name: Include task list php
+  include_tasks: php.yaml
+
+- name: Include task list nginx
+  include_tasks: nginx.yml
+
+- name: Include task list wordpress
+  include_tasks: wordpress.yml

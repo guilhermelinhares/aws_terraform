@@ -18,41 +18,40 @@
     *
   */
   resource "aws_subnet" "main_public_subnet_a" {
-    vpc_id     = aws_vpc.main.id
-    cidr_block = var.vpc_main_public_cidr_a
-    map_public_ip_on_launch = true #Specify with you instance is public or not;
-    availability_zone = "${var.region}a"
+    vpc_id                    = aws_vpc.main.id
+    cidr_block                = var.vpc_main_public_cidr_a
+    map_public_ip_on_launch   = true #Specify with you instance is public or not;
+    availability_zone         = "${var.region}a"
 
     tags = {
-      Name = "Main-Public-AZ-A"
+      Name                    = "Main-Public-AZ-A"
     }
   }
   resource "aws_subnet" "main_public_subnet_b" {
-    vpc_id     = aws_vpc.main.id
-    cidr_block = var.vpc_main_public_cidr_b
-    map_public_ip_on_launch = true #Specify with you instance is public or not;
-    availability_zone = "${var.region}b"
+    vpc_id                    = aws_vpc.main.id
+    cidr_block                = var.vpc_main_public_cidr_b
+    map_public_ip_on_launch   = true #Specify with you instance is public or not;
+    availability_zone         = "${var.region}b"
 
     tags = {
       Name = "Main-Public-AZ-B"
     }
   }
   resource "aws_subnet" "main_private_subnet_a" {
-    vpc_id     = aws_vpc.main.id
-    cidr_block = var.vpc_main_private_cidr_a
-    # cidr_block = element(var.vpc_main_private_cidr)
-    map_public_ip_on_launch = false
-    availability_zone = "${var.region}a"
+    vpc_id                    = aws_vpc.main.id
+    cidr_block                = var.vpc_main_private_cidr_a
+    map_public_ip_on_launch   = false
+    availability_zone         = "${var.region}a"
 
     tags = {
       Name = "Main-Private-AZ-A"
     }
   }
   resource "aws_subnet" "main_private_subnet_b" {
-    vpc_id     = aws_vpc.main.id
-    cidr_block = var.vpc_main_private_cidr_b
-    map_public_ip_on_launch = false
-    availability_zone = "${var.region}b"
+    vpc_id                    = aws_vpc.main.id
+    cidr_block                = var.vpc_main_private_cidr_b
+    map_public_ip_on_launch   = false
+    availability_zone         = "${var.region}b"
 
     tags = {
       Name = "Main-Private-AZ-B"

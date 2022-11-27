@@ -7,7 +7,7 @@
   **/
   resource "aws_security_group" "allow_traffic" {
     name        = var.name_security_group
-    description = "Allow ssh and http inbound traffic"
+    description = "Allow ssh, http, https and mysql inbound traffic"
     vpc_id      = var.vpc_id
 
     ingress {
@@ -26,6 +26,22 @@
       cidr_blocks = ["0.0.0.0/0"]
     }
 
+    ingress {
+      description = "HTTPS"
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+      description = "MYSQL/Aurora"
+      from_port   = 3306
+      to_port     = 3306
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
     egress {
       from_port        = 0
       to_port          = 0
@@ -40,7 +56,7 @@
   }
 #endregion
 
-#region
+#region Create Ec2 Instances
   /**
     * Docs
     * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#security_groups
@@ -53,15 +69,16 @@
 
   **/
   resource "aws_instance" "aws_ec2" {
-    count = var.count_instances # Create a number "var.count_instances" instances equals
+    count                       = var.count_instances # Create a number "var.count_instances" instances equals
   
-    ami           = var.aim_aws_instance
-    instance_type = var.instance_type_aws_instance
+    ami                         = var.aim_aws_instance
+    instance_type               = var.instance_type_aws_instance
     monitoring                  = true
     associate_public_ip_address = true
-    subnet_id              = var.subnet_id
-    vpc_security_group_ids = [aws_security_group.allow_traffic.id]
-    key_name = var.key_aws_instance
+    subnet_id                   = var.subnet_id
+    vpc_security_group_ids      = [aws_security_group.allow_traffic.id]
+    key_name                    = var.key_aws_instance
+    
     # Bootstrap script can run on any instance of the aws_ec2
     # So we just choose the number instances
     connection {

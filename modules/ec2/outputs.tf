@@ -12,3 +12,8 @@ output "security_group_id" {
   description   = "ID of sg"
   value         = aws_security_group.allow_traffic.id
 }
+
+output "count_instances" {
+  description   = "Count of instances"
+  value         = var.count_instances
+}

@@ -22,3 +22,13 @@ output "private_sub_b_id" {
   description     = "Private IP Subnet AZ-B"
   value           = aws_subnet.main_private_subnet_b.id
 }
+
+output "private_subnet_ids" {
+  description     = "Private IP Subnet AZ-A + AZ-B"
+  value           = ["${aws_subnet.main_private_subnet_a.id}","${aws_subnet.main_private_subnet_b.id}"]
+}
+
+output "public_subnet_ids" {
+  description     = "Public IP Subnet AZ-A + AZ-B"
+  value           = ["${aws_subnet.main_public_subnet_a.id}","${aws_subnet.main_public_subnet_b.id}"]
+}

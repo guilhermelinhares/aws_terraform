@@ -68,6 +68,9 @@
     * https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu
 
   **/
+  locals {
+    subnet_ids = concat([var.public_subnet_id_a], [var.public_subnet_id_b])
+  }
   resource "aws_instance" "aws_ec2" {
     count                       = var.count_instances # Create a number "var.count_instances" instances equals
   
@@ -75,7 +78,7 @@
     instance_type               = var.instance_type_aws_instance
     monitoring                  = true
     associate_public_ip_address = true
-    subnet_id                   = var.subnet_id
+    subnet_id                   = element(local.subnet_ids, count.index)
     vpc_security_group_ids      = [aws_security_group.allow_traffic.id]
     key_name                    = var.key_aws_instance
     

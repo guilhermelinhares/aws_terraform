@@ -45,11 +45,20 @@ variable "dest_ansible" {
   default = "/home/ubuntu/ansible" 
 }
 
-
 variable "public_subnet_id_a" {
   description = "Public Subnet AZ-A"
 }
 
 variable "public_subnet_id_b" {
   description = "Public Subnet AZ-B"
+}
+
+variable "source_template_wp" {
+  description = "Source folder with content template rds"
+  default = "modules/rds/templates/"
+}
+
+variable "wp_files" {
+  description = "Destination wp-config changed"
+  default = "/home/ubuntu/ansible/roles/install_wordpress/files" 
 }

@@ -5,3 +5,8 @@ variable "region" {
 variable "profile" {
   default = "noprod"
 }
+
+variable "key_aws_instance" {
+  description = "Path ssh key"
+  default     = "ssh-gui" 
+}

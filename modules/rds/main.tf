@@ -80,3 +80,40 @@
         db_subnet_group_name    = aws_db_subnet_group.rds_sub_groups.id
     }
 #endregion
+
+#region - Update environments in Localfiles
+    /**
+    * Doc
+    * https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file
+    * https://developer.hashicorp.com/terraform/language/functions/templatefile
+    */
+    resource "local_file" "wp_config" {
+        
+        filename    = "${path.module}/templates/wp-config.php.tpl"
+        content     = templatefile(
+            "${path.module}/templates/wp-config.php.tpl",
+            {
+                db_name         = var.db_name,
+                db_user         = var.db_user,
+                db_password     = random_password.password.result
+                db_host         = aws_db_instance.rds_db.address
+            }
+        )
+        # Bootstrap script can run on any instance of the aws_ec2
+        # So we just choose the number instances
+        # connection {
+        #     type        = "ssh"
+        #     user        = "ubuntu"
+        #     private_key = file("${var.key_aws_instance}.pem")
+        #     # host        = var.instances_public_ip
+        #     host = "${element(var.instances_public_ip, var.count_instances)}"
+        #     timeout     = "5m"
+            
+        #     # Copies the file as the ubuntu user using SSH
+        #     provisioner "file" {
+        #         source      = "${var.source_template_wp}/wp-config.php.tpl"
+        #         destination = "${var.wp_files}/wp-config.php"
+        #     }
+        # }
+    }
+#endregion

@@ -65,8 +65,8 @@
     * https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource
     * https://developer.hashicorp.com/terraform/language/resources/provisioners/connection
     * https://developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec
+    * https://developer.hashicorp.com/terraform/language/values/locals
     * https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu
-
   **/
   locals {
     subnet_ids = concat([var.public_subnet_id_a], [var.public_subnet_id_b])
@@ -107,6 +107,12 @@
     provisioner "file" {
       source      = var.source_ansible
       destination = var.dest_ansible
+    }
+
+    # Copies the file wp-config files as the ubuntu user using SSH
+    provisioner "file" {
+      source      = "${var.source_template_wp}/wp-config.php.tpl"
+      destination = "${var.wp_files}/wp-config.php"
     }
    
     tags = {

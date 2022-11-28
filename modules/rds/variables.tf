@@ -66,3 +66,26 @@ variable "rds_sub_groups_id" {
 variable "ec2_security_group_id" {
   description   = "ID of security group"
 }
+
+# variable "source_template_wp" {
+#   description = "Source folder with content template rds"
+#   default = "modules/rds/templates/"
+# }
+
+# variable "wp_files" {
+#   description = "Destination wp-config changed"
+#   default = "/home/ubuntu/ansible/roles/install_wordpress/files" 
+# }
+
+# variable "instances_public_ip" {
+#   description = "Public ip instances"
+# }
+
+# variable "key_aws_instance" {
+#   description = "Path ssh key"
+#   default     = "ssh-gui" 
+# }
+
+# variable "count_instances" {
+#   description   = "Count of instances"
+# }

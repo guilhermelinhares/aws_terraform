@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json": "file:///home/guilherme/Documents/Dev/aws_terraform/ansible/roles/prometheus/tasks/prometheus.yml"
+    }
+}

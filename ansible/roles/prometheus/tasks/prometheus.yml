@@ -1,0 +1,26 @@
+---
+- name: Install Prometheus
+  apt:
+    name: prometheus
+    update_cache: yes
+    state: present
+
+- name: Restart Prometheus
+  service:
+    name: prometheus
+    state: restarted
+
+- name: Enable Prometheus
+  service:
+    name: prometheus
+    enabled: yes  
+
+- name: Restart Node Exporter
+  service:
+    name: prometheus-node-exporter
+    state: restarted
+
+- name: Enable Node Exporter
+  service:
+    name: prometheus-node-exporter
+    enabled: yes

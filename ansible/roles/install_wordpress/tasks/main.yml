@@ -10,3 +10,6 @@
 
 - name: Include task list wordpress
   include_tasks: wordpress.yml
+
+- name: Include task list openssl
+  include_tasks: openssl.yml

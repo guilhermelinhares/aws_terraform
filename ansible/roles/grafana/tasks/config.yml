@@ -30,3 +30,14 @@
     grafana_password: "{{ password }}"
     folder: General
     dashboard_id: 15489
+
+- name: create alertmanager datasource
+  community.grafana.grafana_datasource:
+    name: Alertmanager
+    grafana_url: "{{ url }}"
+    grafana_user: "{{ login }}"
+    grafana_password: "{{ password }}"
+    ds_type: camptocamp-prometheus-alertmanager-datasource
+    ds_url: "{{ url_alertmanager }}"
+    access: proxy
+    tls_skip_verify: true

@@ -1,0 +1,41 @@
+# https://docs.ansible.com/ansible/latest/collections/community/crypto/openssl_privatekey_module.html#examples
+# https://docs.ansible.com/ansible/latest/collections/community/crypto/openssl_publickey_module.html#examples
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html#examples
+---
+# - name: Create a directory if it does not exist
+#   ansible.builtin.file:
+#     path: /etc/ssl/public
+#     state: directory
+#     mode: '0700'
+
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: /etc/ssl/csr
+    state: directory
+    mode: '0755'
+
+- name: Generate an OpenSSL private key with a different size (2048 bits)
+  community.crypto.openssl_privatekey:
+    path: /etc/ssl/private/wordpress.pem
+    size: 2048
+
+- name: Generate an OpenSSL Certificate Signing Request
+  openssl_csr: 
+    path: /etc/ssl/csr/wordpress.csr
+    privatekey_path: /etc/ssl/private/wordpress.pem
+    country_name: BR
+    organization_name: Dev
+    email_address: teste@teste.com.br
+    common_name: localhost
+
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: /etc/ssl/certs/wordpress.crt
+    privatekey_path: /etc/ssl/certs/wordpress.pem
+    csr_path: /etc/ssl/csr/wordpress.csr
+    provider: selfsigned
+
+# - name: Generate an OpenSSL public key in PEM format
+#   community.crypto.openssl_publickey:
+#     path: /etc/ssl/public/wordpress.pem
+#     privatekey_path: /etc/ssl/private/wordpress.pem

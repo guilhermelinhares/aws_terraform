@@ -6,3 +6,4 @@ url_password: admin
 login: admin
 password: admin
 url_prometheus: http://localhost:9090
+url_alertmanager: http://localhost:9093

@@ -1,0 +1,11 @@
+---
+# https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_key_module.html
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_module.html
+# https://docs.ansible.com/ansible/latest/collections/community/grafana/grafana_dashboard_module.html#examples
+# tasks file for grafana
+- name: Include Tasks list Grafana
+  include_tasks: grafana.yml
+
+- name: Configure Grafana
+  include_tasks: config.yml

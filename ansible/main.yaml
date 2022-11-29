@@ -4,6 +4,6 @@
     become: yes
 
     roles:
-      # - install_wordpress
-        - prometheus
-        
+      - install_wordpress
+      - prometheus
+      - grafana

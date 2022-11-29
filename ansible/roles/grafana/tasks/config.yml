@@ -1,0 +1,32 @@
+---
+- name: Update a Grafana admin user
+  community.grafana.grafana_user:
+    url: "{{ url }}"
+    url_username: "{{ url_username }}"
+    url_password: "{{ url_password }}"
+    name: "Grafana Adm"
+    email: 
+    login: "{{ login }}"
+    password: "{{ password }}"
+    is_admin: true
+    state: present
+
+- name: create prometheus datasource
+  community.grafana.grafana_datasource:
+    name: prometheus
+    grafana_url: "{{ url }}"
+    grafana_user: "{{ login }}"
+    grafana_password: "{{ password }}"
+    ds_type: prometheus
+    ds_url: "{{ url_prometheus }}"
+    access: proxy
+    tls_skip_verify: true
+
+- name: Import Grafana dashboard Prometheus
+  community.grafana.grafana_dashboard:
+    state: present
+    grafana_url: "{{ url }}"
+    grafana_user: "{{ login }}"
+    grafana_password: "{{ password }}"
+    folder: General
+    dashboard_id: 15489

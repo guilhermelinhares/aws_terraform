@@ -101,6 +101,7 @@
         "sudo apt install ansible -y",
         "mkdir -p /home/ubuntu/ansible",
         "sudo apt install curl unzip -y",
+        "ansible-galaxy collection install community.grafana"
       ]
     }
     # Copies the file as the ubuntu user using SSH

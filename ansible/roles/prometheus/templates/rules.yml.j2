@@ -1,0 +1,12 @@
+groups:
+- name: Todos os Targets
+  rules:
+  - alert: Exporter FORA
+    # Condição do alerta
+  expr: up == 0
+  for: 1m
+  annotations:
+    title: 'Instance {{ $labels.instance }} down'
+    description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.'
+  labels:
+    severity: 'critical'

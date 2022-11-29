@@ -6,6 +6,7 @@
     state: present
   vars:
     pack:
+    - unzip
     - php7.4-zip
     - php-imagick
     - php7.4-curl

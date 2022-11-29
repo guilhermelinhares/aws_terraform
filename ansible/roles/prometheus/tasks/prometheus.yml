@@ -5,22 +5,32 @@
     update_cache: yes
     state: present
 
-- name: Restart Prometheus
+- name: Enable and Restart Prometheus
   service:
     name: prometheus
     state: restarted
+    enabled: yes 
 
-- name: Enable Prometheus
-  service:
-    name: prometheus
-    enabled: yes  
+- name: Check prometheus
+  uri:
+    url: http://localhost:9090
+    method: GET
+    status_code: 200  
 
-- name: Restart Node Exporter
-  service:
-    name: prometheus-node-exporter
-    state: restarted
-
-- name: Enable Node Exporter
+- name: Enable and Restart Node Exporter
   service:
     name: prometheus-node-exporter
     enabled: yes
+    state: restarted
+
+- name: Install Alert Manager
+  apt:
+    name: prometheus-alertmanager
+    update_cache: yes
+    state: present
+
+- name: Enable and Start Alert Manger
+  service:
+    name: prometheus-alertmanager
+    enabled: yes
+    state: started

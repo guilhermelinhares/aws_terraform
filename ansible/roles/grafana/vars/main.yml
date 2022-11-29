@@ -1,0 +1,8 @@
+---
+# vars file for grafana
+url: http://localhost:3000
+url_username: admin
+url_password: admin
+login: admin
+password: admin
+url_prometheus: http://localhost:9090

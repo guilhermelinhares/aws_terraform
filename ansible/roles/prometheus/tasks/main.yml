@@ -2,5 +2,7 @@
 # tasks file for prometheus
 # Doc https://docs.ansible.com/ansible-core/2.14/user_guide/playbooks_reuse_includes.html
 # https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/uri_module.html
+# https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/
 - name: Include task prometheus
   include_tasks: prometheus.yml

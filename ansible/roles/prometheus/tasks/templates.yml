@@ -1,0 +1,10 @@
+---
+  - name: Config file Prometheus
+    template:
+      src: prometheus.yml.j2
+      dest:  "{{ dest_file_prometheus }}"
+
+  - name: Config file Rules
+    copy:
+      src: ../files/rules.yml
+      dest:  "{{ dest_file_rules }}"

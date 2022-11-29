@@ -1,2 +1,5 @@
 ---
 # vars file for prometheus
+host: http://127.0.0.1
+dest_file_prometheus: /etc/prometheus/prometheus.yml
+dest_file_rules: /etc/prometheus/rules.yml

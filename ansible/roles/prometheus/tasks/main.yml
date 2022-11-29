@@ -6,3 +6,6 @@
 # https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/
 - name: Include task prometheus
   include_tasks: prometheus.yml
+  
+- name: Include tasks templates
+  include_tasks: templates.yml

@@ -1,18 +1,7 @@
-variable "vpc_id" {
-  description   = "Vpc_ID"
-  type          = string
-}
-
 variable "rds_instance_identifier" {
   description   = "Name of RDS"
   default       = "db-wp"
 }
-
-variable "name_security_group" {
-  description   = "Security Group"
-  default       = "allow_traffic_rds"
-}
- 
 
 variable "subnet_ids" {
   description   = "Subnet_ID"
@@ -63,29 +52,20 @@ variable "rds_sub_groups_id" {
   description   = "ID os subnet groups"
 }
 
-variable "ec2_security_group_id" {
+variable "aws_security_group_ec2" {
   description   = "ID of security group"
 }
 
-# variable "source_template_wp" {
-#   description = "Source folder with content template rds"
-#   default = "modules/rds/templates/"
-# }
+variable "aws_security_group_rds" {
+  description   = "ID of SG RDS"
+}
 
-# variable "wp_files" {
-#   description = "Destination wp-config changed"
-#   default = "/home/ubuntu/ansible/roles/install_wordpress/files" 
-# }
+variable "source_template_wp" {
+  description = "Source folder with content template rds"
+  default = "modules/rds/templates/"
+}
 
-# variable "instances_public_ip" {
-#   description = "Public ip instances"
-# }
-
-# variable "key_aws_instance" {
-#   description = "Path ssh key"
-#   default     = "ssh-gui" 
-# }
-
-# variable "count_instances" {
-#   description   = "Count of instances"
-# }
+variable "wp_files" {
+  description = "Destination wp-config changed"
+  default = "/home/ubuntu/ansible/roles/install_wordpress/files" 
+}

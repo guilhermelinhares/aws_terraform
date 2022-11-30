@@ -1,35 +1,3 @@
-#region - Create a security group
-    /**
-    * Doc     
-    * 'https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group'
-    */
-    resource "aws_security_group" "allow_traffic_sg" {
-        name        = var.name_security_group
-        description = "Allow port db inbound traffic"
-        vpc_id      = var.vpc_id
-
-        ingress {
-            description     = "RDS Ec2"
-            from_port       = var.rds_port
-            to_port         = var.rds_port
-            protocol        = "tcp"
-            security_groups = [var.ec2_security_group_id]
-        }
-
-        egress {
-            from_port        = 0
-            to_port          = 0
-            protocol         = "-1"
-            cidr_blocks      = ["0.0.0.0/0"]
-            ipv6_cidr_blocks = ["::/0"]
-        }
-
-        tags = {
-            Name = "allow_traffic_rds"
-        }
-    }
-#endregion
-
 #region - Subnet RDS group
     /**
     * Doc
@@ -59,7 +27,7 @@
 
 #region - Create a RDS Instance
     /**
-    * Doc https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance#multi_az
+     *  https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance#multi_az
     */
     resource "aws_db_instance" "rds_db" {
         identifier              = var.rds_instance_identifier
@@ -76,7 +44,7 @@
         engine_version          = var.db_engine_version
         publicly_accessible     = false
         port                    = var.rds_port
-        vpc_security_group_ids  = [aws_security_group.allow_traffic_sg.id]
+        vpc_security_group_ids  = [var.aws_security_group_rds]
         db_subnet_group_name    = aws_db_subnet_group.rds_sub_groups.id
     }
 #endregion
@@ -88,7 +56,7 @@
     * https://developer.hashicorp.com/terraform/language/functions/templatefile
     */
     resource "local_file" "wp_config" {
-        
+        # count       = 2
         filename    = "${path.module}/templates/wp-config.php.tpl"
         content     = templatefile(
             "${path.module}/templates/wp-config.php.tpl",
@@ -99,21 +67,5 @@
                 db_host         = aws_db_instance.rds_db.address
             }
         )
-        # Bootstrap script can run on any instance of the aws_ec2
-        # So we just choose the number instances
-        # connection {
-        #     type        = "ssh"
-        #     user        = "ubuntu"
-        #     private_key = file("${var.key_aws_instance}.pem")
-        #     # host        = var.instances_public_ip
-        #     host = "${element(var.instances_public_ip, var.count_instances)}"
-        #     timeout     = "5m"
-            
-        #     # Copies the file as the ubuntu user using SSH
-        #     provisioner "file" {
-        #         source      = "${var.source_template_wp}/wp-config.php.tpl"
-        #         destination = "${var.wp_files}/wp-config.php"
-        #     }
-        # }
     }
 #endregion

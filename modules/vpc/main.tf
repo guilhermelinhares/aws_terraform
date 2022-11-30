@@ -110,7 +110,7 @@
 
 #region Association subnets in route tables
   /**
-    * Doc -> https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association
+    * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association
   */
   resource "aws_route_table_association" "public_a" {
     route_table_id = aws_route_table.public.id
@@ -127,5 +127,127 @@
   resource "aws_route_table_association" "private_b" {
     route_table_id = aws_route_table.private.id
     subnet_id      = aws_subnet.main_private_subnet_b.id
+  }
+#endregion
+
+#region Create a security group Ec2
+  /**
+    *  Docs
+    * 'https://github.com/diogolimaelven/elvenworks_formacao_sre/blob/main/Aula_terraform/main.tf'
+    * 'https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group'
+    *
+  **/
+  resource "aws_security_group" "aws_security_group_ec2" {
+    name        = var.name_security_group_ec2
+    description = "Allow ssh, http, https and mysql inbound traffic"
+    vpc_id      = aws_vpc.main.id
+
+    ingress {
+      description = "SSH"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+      description = "HTTP"
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+      description = "HTTPS"
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+      description = "MYSQL/Aurora"
+      from_port   = 3306
+      to_port     = 3306
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    egress {
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+    }
+
+    tags = {
+      Name = "aws_security_group_ec2"
+    }
+  }
+#endregion
+
+#region - Create a security group RDS
+    /**
+    * Doc     
+    * 'https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group'
+    */
+    resource "aws_security_group" "aws_security_group_rds" {
+      name        = var.name_security_group_rds
+      description = "Allow port db inbound traffic"
+      vpc_id      = aws_vpc.main.id
+
+      ingress {
+        description     = "RDS Ec2"
+        from_port       = var.rds_port
+        to_port         = var.rds_port
+        protocol        = "tcp"
+        security_groups = [aws_security_group.aws_security_group_ec2.id]
+      }
+
+      egress {
+        from_port        = 0
+        to_port          = 0
+        protocol         = "-1"
+        cidr_blocks      = ["0.0.0.0/0"]
+        ipv6_cidr_blocks = ["::/0"]
+      }
+
+      tags = {
+          Name = "aws_security_group_rds"
+      }
+    }
+#endregion
+
+#region - Create a Security Group Elasticache
+  /**
+    * https://registry.terraform.io/modules/cloudposse/elasticache-memcached/aws/latest
+    * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_cluster
+  */
+  resource "aws_security_group" "aws_security_group_sections" {
+    name        = var.name_security_group_sections
+    description = "Allow memcached for Ec2 SGA inbound traffic"
+    vpc_id      = aws_vpc.main.id
+
+    ingress {
+      description = "Memcached"
+      from_port   = 11211
+      to_port     = 11211
+      protocol    = "tcp"
+      security_groups = [aws_security_group.aws_security_group_ec2.id]
+    }
+
+    egress {
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+    }
+
+    tags = {
+      Name = "aws_security_group_sections"
+    }
   }
 #endregion

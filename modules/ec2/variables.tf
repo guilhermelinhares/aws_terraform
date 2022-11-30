@@ -11,11 +11,6 @@ variable "instance_type_aws_instance" {
   description = "Instance T2 Micro 1-vCPUs/1GB-Ram "
   default = "t2.micro"
 }
-
-variable "name_security_group" {
-  description = "Security Group"
-  default = "allow_traffic"
-}
  
 variable "vpc_id" {
   description = "Vpc_ID"
@@ -61,4 +56,19 @@ variable "source_template_wp" {
 variable "wp_files" {
   description = "Destination wp-config changed"
   default = "/home/ubuntu/ansible/roles/install_wordpress/files" 
+}
+
+variable "source_template_elasticache" {
+  description = "Source folder with content template elasticache"
+  default = "modules/elasticache/templates/"
+}
+
+variable "php_files" {
+  description = "Destination php.ini changed"
+  default = "/home/ubuntu/ansible/roles/install_wordpress/files" 
+}
+
+
+variable "aws_security_group_ec2" {
+  description = "Security Group Ec2"
 }

@@ -8,11 +8,6 @@ output "instances_public_ip" {
   value       = aws_instance.aws_ec2.*.public_ip
 }
 
-output "security_group_id" {
-  description   = "ID of sg"
-  value         = aws_security_group.allow_traffic.id
-}
-
 output "count_instances" {
   description   = "Count of instances"
   value         = var.count_instances

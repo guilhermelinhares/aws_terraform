@@ -1,61 +1,3 @@
-#region Create a security group
-  /**
-    *  Docs
-    * 'https://github.com/diogolimaelven/elvenworks_formacao_sre/blob/main/Aula_terraform/main.tf'
-    * 'https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group'
-    *
-  **/
-  resource "aws_security_group" "allow_traffic" {
-    name        = var.name_security_group
-    description = "Allow ssh, http, https and mysql inbound traffic"
-    vpc_id      = var.vpc_id
-
-    ingress {
-      description = "SSH"
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    ingress {
-      description = "HTTP"
-      from_port   = 80
-      to_port     = 80
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    ingress {
-      description = "HTTPS"
-      from_port   = 443
-      to_port     = 443
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    ingress {
-      description = "MYSQL/Aurora"
-      from_port   = 3306
-      to_port     = 3306
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    egress {
-      from_port        = 0
-      to_port          = 0
-      protocol         = "-1"
-      cidr_blocks      = ["0.0.0.0/0"]
-      ipv6_cidr_blocks = ["::/0"]
-    }
-
-    tags = {
-      Name = "allow_traffic"
-    }
-  }
-#endregion
-
 #region Create Ec2 Instances
   /**
     * Docs
@@ -79,7 +21,7 @@
     monitoring                  = true
     associate_public_ip_address = true
     subnet_id                   = element(local.subnet_ids, count.index)
-    vpc_security_group_ids      = [aws_security_group.allow_traffic.id]
+    vpc_security_group_ids      = [var.aws_security_group_ec2]
     key_name                    = var.key_aws_instance
     
     # Bootstrap script can run on any instance of the aws_ec2
@@ -102,20 +44,29 @@
         "mkdir -p /home/ubuntu/ansible",
         "sudo apt install curl unzip -y",
         "ansible-galaxy collection install community.grafana",
-        "ansible-galaxy collection install community.crypto"
+        "ansible-galaxy collection install community.crypto",
+        "cd /home/ubuntu/ansible/ && ansible-playbook main.yaml"
       ]
     }
+    
     # Copies the file as the ubuntu user using SSH
     provisioner "file" {
       source      = var.source_ansible
       destination = var.dest_ansible
     }
 
-    # Copies the file wp-config files as the ubuntu user using SSH
+    # Copies the file wp-config as the ubuntu user using SSH
     provisioner "file" {
       source      = "${var.source_template_wp}/wp-config.php.tpl"
       destination = "${var.wp_files}/wp-config.php"
     }
+
+    # Copies the file php.ini as the ubuntu user using SSH
+    provisioner "file" {
+      source      = "${var.source_template_elasticache}/php.ini.tpl"
+      destination = "${var.php_files}/php.ini"
+    }
+
    
     tags = {
       Name = "terraform_ec2-${count.index}"

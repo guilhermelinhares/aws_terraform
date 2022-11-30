@@ -6,7 +6,7 @@
 
   output "private_subnet_ids" {
     description   = "Private ip subnet AZ-A + AZ-B"
-    value         = ["${module.vpc.private_sub_a_id}","${module.vpc.private_sub_b_id}"]
+    value         = ["${module.vpc.private_subnet_id_a}","${module.vpc.private_subnet_id_b}"]
   }
 
   output "public_subnet_ids" {
@@ -14,25 +14,37 @@
     value         = ["${module.vpc.public_subnet_id_a}","${module.vpc.public_subnet_id_b}"]
   }
 
-  output "public_subnet_id_a" {
-    description = "Public IP Subnet AZ-A"
-    value       = module.vpc.public_subnet_id_a
+  output "aws_security_group_ec2" {
+    description = "Return ID of SG Ec2"
+    value       = module.vpc.security_group_ec2_id
   }
 
-  output "public_subnet_id_b" {
-    description = "Public IP Subnet AZ-B"
-    value       = module.vpc.public_subnet_id_b
+  output "rds_security_group_id" {
+    description   = "SG RDS ID"
+    value = module.vpc.aws_security_group_rds_id
   }
 
-  # output "private_sub_a_id" {
-  #   description = "Private ip subnet AZ-A"
-  #   value       = module.vpc.private_sub_a_id
-  # }
 
-  # output "private_sub_b_id" {
-  #   description = "Private ip subnet AZ-B"
-  #   value       = module.vpc.private_sub_b_id
-  # }
+#   output "private_subnet_id_a" {
+#     description = "Private ip subnet AZ-A"
+#     value       = module.vpc.private_subnet_id_a
+#   }
+
+#   output "private_subnet_id_b" {
+#     description = "Private ip subnet AZ-B"
+#     value       = module.vpc.private_subnet_id_b
+#   }
+
+#   output "public_subnet_id_a" {
+#     description = "Public IP Subnet AZ-A"
+#     value       = module.vpc.public_subnet_id_a
+#   }
+
+#   output "public_subnet_id_b" {
+#     description = "Public IP Subnet AZ-B"
+#     value       = module.vpc.public_subnet_id_b
+#   }
+
 #endregion
 
 #region - Output Module Ec2
@@ -47,16 +59,10 @@
     value       = module.ec2_instance.*.instances_public_ip
   }
 
-  output "ec2_security_group_id" {
-    description = "Return ID of sg Ec2"
-    value       = module.ec2_instance.security_group_id
-  }
-
   output "count_instances" {
     description   = "Count of instances"
     value         = module.ec2_instance.count_instances
   }
-
 
 #endregion
 
@@ -78,5 +84,12 @@
     value       = module.rds.rds_sub_groups_id
   }
 
+#endregion
 
+#region - Output Module Elasticache
+
+output "endpoint" {
+  description   = "Enpoint name Memcached"
+  value         = module.elasticache.endpoint
+}
 #endregion

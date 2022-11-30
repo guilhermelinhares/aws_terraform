@@ -14,29 +14,37 @@ module "vpc" {
 
 
 module "rds" {
-  source                = "./modules/rds"
+  source                  = "./modules/rds"
 
-  vpc_id                = module.vpc.vpc_id
-  subnet_ids            = ["${module.vpc.private_sub_a_id}","${module.vpc.private_sub_b_id}"]
-  rds_sub_groups_id     = module.rds.rds_sub_groups_id
-  ec2_security_group_id = module.ec2_instance.security_group_id
-  # count_instances       = module.ec2_instance.count_instances
-  # instances_public_ip   = "${element(module.ec2_instance.*.instances_public_ip,module.ec2_instance.count_instances)}"
-  
-  depends_on            = [module.vpc.vpc_id, module.ec2_instance.ec2_security_group_id]
+  subnet_ids              = ["${module.vpc.private_subnet_id_a}","${module.vpc.private_subnet_id_b}"]
+  rds_sub_groups_id       = module.rds.rds_sub_groups_id
+  aws_security_group_ec2   = module.vpc.security_group_ec2_id
+  aws_security_group_rds   = module.vpc.aws_security_group_rds_id
+
+  depends_on            = [module.vpc]
 }
 
-/**
-* Doc
-* https://developer.hashicorp.com/terraform/language/functions/element
-*/
+
+module "elasticache" {
+  source = "./modules/elasticache"
+
+  private_subnet_id_a   = module.vpc.private_subnet_id_a
+  private_subnet_id_b   = module.vpc.private_subnet_id_b
+  depends_on = [module.vpc, module.rds]
+  
+}
+
+# /**
+#  * https://developer.hashicorp.com/terraform/language/functions/element
+# */
 module "ec2_instance" {
 
-  source              = "./modules/ec2"
-  vpc_id              = module.vpc.vpc_id
-  public_subnet_id_a  = module.vpc.public_subnet_id_a
-  public_subnet_id_b  = module.vpc.public_subnet_id_b
-  subnet_id           = "${element(module.vpc.public_subnet_ids,module.ec2_instance.count_instances)}"
+  source                  = "./modules/ec2"
+  vpc_id                  = module.vpc.vpc_id
+  public_subnet_id_a      = module.vpc.public_subnet_id_a
+  public_subnet_id_b      = module.vpc.public_subnet_id_b
+  subnet_id               = "${element(module.vpc.public_subnet_ids,module.ec2_instance.count_instances)}"
+  aws_security_group_ec2   = module.vpc.security_group_ec2_id
 
-  depends_on          = [module.vpc.vpc_id,module.rds.id]
+  depends_on              = [module.vpc,module.rds, module.elasticache]
 }

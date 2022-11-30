@@ -21,7 +21,7 @@ module "rds" {
   aws_security_group_ec2   = module.vpc.security_group_ec2_id
   aws_security_group_rds   = module.vpc.aws_security_group_rds_id
 
-  depends_on            = [module.vpc]
+  depends_on               = [module.vpc]
 }
 
 module "elasticache" {
@@ -30,7 +30,7 @@ module "elasticache" {
   private_subnet_id_a   = module.vpc.private_subnet_id_a
   private_subnet_id_b   = module.vpc.private_subnet_id_b
 
-  depends_on = [module.vpc, module.rds]
+  depends_on            = [module.vpc, module.rds]
   
 }
 
@@ -44,7 +44,7 @@ module "efs" {
   vpc_id                   = module.vpc.vpc_id
   aws_security_group_efs   = module.vpc.aws_security_group_efs_id
 
-  depends_on = [module.vpc]
+  depends_on               = [module.vpc]
 }
 
 /**
@@ -60,6 +60,6 @@ module "ec2_instance" {
   subnet_id                = "${element(module.vpc.public_subnet_ids,module.ec2_instance.count_instances)}"
   aws_security_group_ec2   = module.vpc.security_group_ec2_id
   dns_efs                  = module.efs.dns_name
-  
+
   depends_on               = [module.vpc,module.rds, module.elasticache, module.efs]
 }

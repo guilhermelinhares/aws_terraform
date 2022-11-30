@@ -72,3 +72,7 @@ variable "php_files" {
 variable "aws_security_group_ec2" {
   description = "Security Group Ec2"
 }
+
+variable "dns_efs" {
+  description = "DNS EFS"
+}

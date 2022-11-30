@@ -37,8 +37,8 @@
     enabled: yes
     state: started
 
-- name: "Check Grafana"
-  uri:
-    url: "{{ url }}"
-    method: GET
-    status_code: 200
+# - name: "Check Grafana"
+#   uri:
+#     url: "{{ url }}"
+#     method: GET
+#     status_code: 200

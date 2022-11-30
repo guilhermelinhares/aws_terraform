@@ -27,13 +27,18 @@ variable "name_security_group_ec2" {
 }
 
 variable "name_security_group_rds" {
-  description   = "Security Group Rds"
+  description   = "Security Group RDS"
   default       = "aws_security_group_rds"
 }
 
 variable "name_security_group_sections" {
   description   = "Security Group Sections"
   default       = "aws_security_group_sections"
+}
+
+variable "name_security_group_efs" {
+  description   = "Security Group EFS"
+  default       = "aws_security_group_efs"
 }
 
 variable "rds_port" {

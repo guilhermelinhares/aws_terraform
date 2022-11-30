@@ -173,6 +173,38 @@
       cidr_blocks = ["0.0.0.0/0"]
     }
 
+    ingress {
+      description = "Prometheus"
+      from_port   = 9090
+      to_port     = 9090
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+      description = "Prometheus Node Exporter"
+      from_port   = 9100
+      to_port     = 9100
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+      description = "Alert Manager"
+      from_port   = 9093
+      to_port     = 9093
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+      description = "Grafana"
+      from_port   = 3000
+      to_port     = 3000
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+
     egress {
       from_port        = 0
       to_port          = 0
@@ -233,6 +265,39 @@
       from_port   = 11211
       to_port     = 11211
       protocol    = "tcp"
+      security_groups = [aws_security_group.aws_security_group_ec2.id]
+    }
+
+    egress {
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+    }
+
+    tags = {
+      Name = "aws_security_group_sections"
+    }
+  }
+#endregion
+
+#region - Create a Security Group EFS
+  /**
+   * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/efs_file_system
+   * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/efs_file_system
+   * https://registry.terraform.io/modules/terraform-aws-modules/security-group/aws/latest
+  */
+  resource "aws_security_group" "aws_security_group_efs" {
+    name        = var.name_security_group_efs
+    description = "Allow efs for Ec2 SGA inbound traffic"
+    vpc_id      = aws_vpc.main.id
+
+    ingress {
+      description = "EFS - All protocols"
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
       security_groups = [aws_security_group.aws_security_group_ec2.id]
     }
 

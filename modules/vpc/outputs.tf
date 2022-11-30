@@ -18,6 +18,11 @@ output "aws_security_group_sections_id" {
   value         = aws_security_group.aws_security_group_sections.id
 }
 
+output "aws_security_group_efs_id" {
+  description   = "ID of SG EFS"
+  value         = aws_security_group.aws_security_group_efs.id
+}
+
 output "public_subnet_id_a" {
   description     = "Public IP Subnet AZ-A"
   value           = aws_subnet.main_public_subnet_a.id

@@ -1,8 +1,7 @@
 #region - Subnet RDS group
     /**
-    * Doc
-    * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_subnet_group
-    * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/db_subnet_group
+     * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_subnet_group
+     * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/db_subnet_group
     */
     resource "aws_db_subnet_group" "rds_sub_groups" {
         name       = "sub_gp_rds"
@@ -16,7 +15,7 @@
 
 #region - Create a Random Password 
     /**
-    * Doc https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password
+     * https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password
     */
     resource "random_password" "password" {
         length           = 16
@@ -51,12 +50,10 @@
 
 #region - Update environments in Localfiles
     /**
-    * Doc
-    * https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file
-    * https://developer.hashicorp.com/terraform/language/functions/templatefile
+     * https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file
+     * https://developer.hashicorp.com/terraform/language/functions/templatefile
     */
     resource "local_file" "wp_config" {
-        # count       = 2
         filename    = "${path.module}/templates/wp-config.php.tpl"
         content     = templatefile(
             "${path.module}/templates/wp-config.php.tpl",

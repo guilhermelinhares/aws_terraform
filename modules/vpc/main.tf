@@ -3,9 +3,9 @@
   * Doc -> https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc
 **/
   resource "aws_vpc" "main" {
-    cidr_block       = var.vpc_main_cidr
-    instance_tenancy = "default"
-
+    cidr_block            = var.vpc_main_cidr
+    instance_tenancy      = "default"
+    enable_dns_hostnames  = true # flag to enable/disable
     tags = {
       Name = "main"
     }
@@ -73,7 +73,7 @@
 
 #region Create a main route and associate with a vpc 
   /**
-  * Doc -> https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/main_route_table_association
+   *  https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/main_route_table_association
   */
   resource "aws_main_route_table_association" "public" {
     vpc_id         = aws_vpc.main.id
@@ -83,7 +83,7 @@
 
 #region Create a routes tables public and private
   /**
-  * Doc -> https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table
+   * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table
   */
   resource "aws_route_table" "public" {
     vpc_id = aws_vpc.main.id
@@ -132,7 +132,6 @@
 
 #region Create a security group Ec2
   /**
-    *  Docs
     * 'https://github.com/diogolimaelven/elvenworks_formacao_sre/blob/main/Aula_terraform/main.tf'
     * 'https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group'
     *
@@ -190,8 +189,7 @@
 
 #region - Create a security group RDS
     /**
-    * Doc     
-    * 'https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group'
+     * 'https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group'
     */
     resource "aws_security_group" "aws_security_group_rds" {
       name        = var.name_security_group_rds

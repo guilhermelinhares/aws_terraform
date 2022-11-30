@@ -34,9 +34,9 @@ module "elasticache" {
   
 }
 
-# /**
-#  * https://developer.hashicorp.com/terraform/language/functions/element
-# */
+/**
+  * https://developer.hashicorp.com/terraform/language/functions/element
+*/
 module "ec2_instance" {
 
   source                  = "./modules/ec2"

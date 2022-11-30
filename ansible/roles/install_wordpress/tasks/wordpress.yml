@@ -16,3 +16,8 @@
   copy:
     src: ../files/wp-config.php
     dest: "{{ dest_wp_conf }}"
+
+- name: Copy file php-info
+  copy:
+    src: ../files/info.php
+    dest: "{{ dest_info_php }}"

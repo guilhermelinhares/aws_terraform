@@ -60,5 +60,6 @@ module "ec2_instance" {
   subnet_id                = "${element(module.vpc.public_subnet_ids,module.ec2_instance.count_instances)}"
   aws_security_group_ec2   = module.vpc.security_group_ec2_id
   dns_efs                  = module.efs.dns_name
-  # depends_on               = [module.vpc,module.rds, module.elasticache, module.efs]
+  
+  depends_on               = [module.vpc,module.rds, module.elasticache, module.efs]
 }

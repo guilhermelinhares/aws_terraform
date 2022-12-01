@@ -38,3 +38,12 @@ variable "aws-lb-tg-https" {
   description   = "TG PT 443"
   default       = "aws-lb-tg-https"
 }
+
+variable "count_instances" {
+  description = "Number of instances"
+}
+
+variable "instance_id" {
+  type        = list(string) 
+  description = "ID of instances"
+}

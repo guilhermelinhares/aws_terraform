@@ -80,3 +80,24 @@ resource "aws_lb_listener" "listener_https" {
         }
     }
 #endregion
+
+#region - Atach resources in target group 
+    /**
+     * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group_attachment
+    */
+    resource "aws_lb_target_group_attachment" "tg_group_attach_http" {
+
+        count            = var.count_instances
+        target_group_arn = aws_lb_target_group.tg_group_http.arn
+        target_id        = "${element(var.instance_id, count.index)}"
+        port             = 80
+    }
+    resource "aws_lb_target_group_attachment" "tg_group_attach_https" {
+        
+        count            = var.count_instances
+        target_group_arn = aws_lb_target_group.tg_group_https.arn
+        target_id        = "${element(var.instance_id, count.index)}"
+        port             = 443
+    }
+
+#endregion

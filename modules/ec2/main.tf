@@ -43,8 +43,6 @@
         "mkdir -p /home/ubuntu/ansible",
         "sudo mkdir /data_efs",
         "sudo apt install curl unzip nfs-common -y",
-        "ansible-galaxy collection install community.grafana",
-        "ansible-galaxy collection install community.crypto",
         "sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${var.dns_efs}:/ /data_efs"
       ]
     }
@@ -69,6 +67,8 @@
 
     provisioner "remote-exec" {
       inline = [
+        "ansible-galaxy collection install community.grafana",
+        "ansible-galaxy collection install community.crypto",
         "cd /home/ubuntu/ansible/ && ansible-playbook main.yaml"
       ]
     }

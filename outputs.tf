@@ -51,7 +51,7 @@
   
   output "instance_id" {
     description = "Instance ID"
-    value       = module.ec2_instance.*.instance_id
+    value       = [module.ec2_instance.*.instance_id]
   }
 
   output "instances_public_ip" {

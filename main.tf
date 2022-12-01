@@ -14,10 +14,10 @@ module "vpc" {
 
 
 module "rds" {
-  source                  = "./modules/rds"
+  source                   = "./modules/rds"
 
-  subnet_ids              = ["${module.vpc.private_subnet_id_a}","${module.vpc.private_subnet_id_b}"]
-  rds_sub_groups_id       = module.rds.rds_sub_groups_id
+  subnet_ids               = ["${module.vpc.private_subnet_id_a}","${module.vpc.private_subnet_id_b}"]
+  rds_sub_groups_id        = module.rds.rds_sub_groups_id
   aws_security_group_ec2   = module.vpc.security_group_ec2_id
   aws_security_group_rds   = module.vpc.aws_security_group_rds_id
 
@@ -62,15 +62,17 @@ module "ec2_instance" {
   dns_efs                  = module.efs.dns_name
 
   # depends_on               = [module.vpc, module.elasticache, module.efs]
-   depends_on               = [module.vpc,module.rds, module.elasticache, module.efs]
+  depends_on               = [module.vpc,module.rds, module.elasticache, module.efs]
 }
 
 module "alb" {
   source                    = "./modules/alb"
-
+  
+  count_instances           = module.ec2_instance.count_instances 
+  instance_id               = element(module.ec2_instance.*.instance_id, module.ec2_instance.count_instances)
   vpc_id                    = module.vpc.vpc_id
   public_subnet_id_a        = module.vpc.public_subnet_id_a
   public_subnet_id_b        = module.vpc.public_subnet_id_b
 
-  depends_on = [module.vpc, module.ec2_instance]
+  depends_on                = [module.vpc, module.ec2_instance]
 }

@@ -66,25 +66,25 @@
 
 #endregion
 
-#region - Output Module RDS
+# #region - Output Module RDS
 
-  output "rds_id" {
-    description = "RDS Identifier"
-    value       = module.rds.rds_id
-  }
+#   output "rds_id" {
+#     description = "RDS Identifier"
+#     value       = module.rds.rds_id
+#   }
 
-  output "password_db" {
-    description = "Gen password"
-    value       = module.rds.password_db
-    sensitive   = true
-  }
+#   output "password_db" {
+#     description = "Gen password"
+#     value       = module.rds.password_db
+#     sensitive   = true
+#   }
 
-  output "rds_sub_groups_id" {
-    description = "Return ID subnet group"
-    value       = module.rds.rds_sub_groups_id
-  }
+#   output "rds_sub_groups_id" {
+#     description = "Return ID subnet group"
+#     value       = module.rds.rds_sub_groups_id
+#   }
 
-#endregion
+# #endregion
 
 #region - Output Module Elasticache
 

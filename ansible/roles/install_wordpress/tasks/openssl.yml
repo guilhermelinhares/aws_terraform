@@ -27,11 +27,6 @@
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
     path: /etc/ssl/certs/wordpress.crt
-    privatekey_path: /etc/ssl/certs/wordpress.key
+    privatekey_path: /etc/ssl/private/wordpress.key
     csr_path: /etc/ssl/csr/wordpress.csr
     provider: selfsigned
-
-- name: Reload Nginx
-  systemd:
-    name: nginx
-    state: reloaded

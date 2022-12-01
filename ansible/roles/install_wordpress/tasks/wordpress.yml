@@ -20,4 +20,4 @@
 - name: Copy file php-info
   copy:
     src: ../files/info.php
-    dest: "{{ dest_info_php }}"
+    dest: "{{ wp_path }}"

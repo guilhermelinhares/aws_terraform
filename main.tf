@@ -30,8 +30,8 @@ module "elasticache" {
   private_subnet_id_a   = module.vpc.private_subnet_id_a
   private_subnet_id_b   = module.vpc.private_subnet_id_b
 
+  # depends_on            = [module.vpc]
   depends_on            = [module.vpc, module.rds]
-  
 }
 
 
@@ -61,5 +61,16 @@ module "ec2_instance" {
   aws_security_group_ec2   = module.vpc.security_group_ec2_id
   dns_efs                  = module.efs.dns_name
 
-  depends_on               = [module.vpc,module.rds, module.elasticache, module.efs]
+  # depends_on               = [module.vpc, module.elasticache, module.efs]
+   depends_on               = [module.vpc,module.rds, module.elasticache, module.efs]
+}
+
+module "alb" {
+  source                    = "./modules/alb"
+
+  vpc_id                    = module.vpc.vpc_id
+  public_subnet_id_a        = module.vpc.public_subnet_id_a
+  public_subnet_id_b        = module.vpc.public_subnet_id_b
+
+  depends_on = [module.vpc, module.ec2_instance]
 }

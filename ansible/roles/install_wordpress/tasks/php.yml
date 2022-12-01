@@ -19,3 +19,13 @@
     - php7.4-common
     - php7.4-gd
     - php7.4-json
+
+- name: Copy file php.ini
+  copy:
+    src: ../files/php.ini
+    dest: "{{ dest_php_conf }}"
+
+- name: Restart Php-Fpm
+  service:
+    name: php7.4-fpm
+    state: restarted

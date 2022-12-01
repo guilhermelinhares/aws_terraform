@@ -5,4 +5,4 @@ url_wp: https://wordpress.org/latest.zip
 dest_nginx_conf: /etc/nginx/sites-enabled/default
 dest_wp_conf: /var/www/html/wordpress/wp-config.php
 wp_path: /var/www/html/wordpress
-dest_info_php: /var/www/html
+dest_php_conf: /etc/php/7.4/fpm/php.ini

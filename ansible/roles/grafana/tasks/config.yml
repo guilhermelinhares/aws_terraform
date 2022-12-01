@@ -1,16 +1,4 @@
 ---
-- name: Update a Grafana admin user
-  community.grafana.grafana_user:
-    url: "{{ url }}"
-    url_username: "{{ url_username }}"
-    url_password: "{{ url_password }}"
-    name: "Grafana Adm"
-    email: 
-    login: "{{ login }}"
-    password: "{{ password }}"
-    is_admin: true
-    state: present
-
 - name: create prometheus datasource
   community.grafana.grafana_datasource:
     name: prometheus
@@ -30,14 +18,3 @@
     grafana_password: "{{ password }}"
     folder: General
     dashboard_id: 15489
-
-- name: create alertmanager datasource
-  community.grafana.grafana_datasource:
-    name: Alertmanager
-    grafana_url: "{{ url }}"
-    grafana_user: "{{ login }}"
-    grafana_password: "{{ password }}"
-    ds_type: camptocamp-prometheus-alertmanager-datasource
-    ds_url: "{{ url_alertmanager }}"
-    access: proxy
-    tls_skip_verify: true

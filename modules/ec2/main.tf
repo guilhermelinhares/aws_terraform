@@ -152,9 +152,9 @@
 
       provisioner "remote-exec" {
         inline = [
-          "ansible-galaxy collection install community.grafana",
           "ansible-galaxy collection install community.crypto",
-          # "cd /home/ubuntu/ansible/ && ansible-playbook main.yaml"
+          "ansible-galaxy collection install community.grafana",
+          "cd /home/ubuntu/ansible/ && ansible-playbook main.yaml"
         ]
       }
 

@@ -134,20 +134,20 @@
       
       # Copies the file as the ubuntu user using SSH
       provisioner "file" {
-        source      = var.source_ansible
-        destination = var.dest_ansible
+        source        = var.source_ansible
+        destination   = var.dest_ansible
       }
 
       # Copies the file wp-config as the ubuntu user using SSH
       provisioner "file" {
-        source      = "${var.source_template_wp}/wp-config.php.tpl"
-        destination = "${var.wp_files}/wp-config.php"
+        source        = "${var.source_template_wp}/wp-config.php.tpl"
+        destination   = "${var.wp_files}/wp-config.php"
       }
 
       # Copies the file php.ini as the ubuntu user using SSH
       provisioner "file" {
-        source      = "${var.source_template_elasticache}/php.ini.tpl"
-        destination = "${var.php_files}/php.ini"
+        source        = "${var.source_template_elasticache}/php.ini.tpl"
+        destination   = "${var.php_files}/php.ini"
       }
 
       provisioner "remote-exec" {

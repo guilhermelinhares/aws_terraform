@@ -11,12 +11,6 @@
     state: restarted
     enabled: yes 
 
-# - name: Check prometheus
-#   uri:
-#     url: http://localhost:9090
-#     method: GET
-#     status_code: 200  
-
 - name: Enable and Restart Node Exporter
   service:
     name: prometheus-node-exporter
@@ -29,8 +23,14 @@
     update_cache: yes
     state: present
 
-- name: Enable and Start Alert Manger
+- name: Enable and Start Alert Manager
   service:
     name: prometheus-alertmanager
     enabled: yes
     state: started
+    
+- name: Enable and Restart Prometheus
+  service:
+    name: prometheus
+    state: restarted
+    enabled: yes 

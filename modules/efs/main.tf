@@ -11,10 +11,6 @@
     tags = {
         Name = var.name_efs
     }
-
-    # lifecycle_policy {
-    #   transition_to_ia  = [] # Default is false
-    # }
   }
 #endregion
 

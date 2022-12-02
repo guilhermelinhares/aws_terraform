@@ -4,23 +4,23 @@ output "vpc_id" {
 }
 
 output "security_group_ec2_id" {
-  description   = "ID of SG EC2"
-  value         = aws_security_group.aws_security_group_ec2.id
+  description     = "ID of SG EC2"
+  value           = aws_security_group.aws_security_group_ec2.id
 }
 
 output "aws_security_group_rds_id" {
-  description   = "ID of SG RDS"
-  value         = aws_security_group.aws_security_group_rds.id
+  description     = "ID of SG RDS"
+  value           = aws_security_group.aws_security_group_rds.id
 }
 
 output "aws_security_group_sections_id" {
-  description   = "ID of SG Sections"
-  value         = aws_security_group.aws_security_group_sections.id
+  description     = "ID of SG Sections"
+  value           = aws_security_group.aws_security_group_sections.id
 }
 
 output "aws_security_group_efs_id" {
-  description   = "ID of SG EFS"
-  value         = aws_security_group.aws_security_group_efs.id
+  description     = "ID of SG EFS"
+  value           = aws_security_group.aws_security_group_efs.id
 }
 
 output "public_subnet_id_a" {

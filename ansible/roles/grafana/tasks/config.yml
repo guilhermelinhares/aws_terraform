@@ -1,20 +1,20 @@
 ---
-- name: create prometheus datasource
-  community.grafana.grafana_datasource:
-    name: prometheus
-    grafana_url: "{{ url }}"
-    grafana_user: "{{ login }}"
-    grafana_password: "{{ password }}"
-    ds_type: prometheus
-    ds_url: "{{ url_prometheus }}"
-    access: proxy
-    tls_skip_verify: true
+# - name: create prometheus datasource
+#   community.grafana.grafana_datasource:
+#     name: prometheus
+#     grafana_url: "{{ url }}"
+#     grafana_user: "{{ login }}"
+#     grafana_password: "{{ password }}"
+#     ds_type: prometheus
+#     ds_url: "{{ url_prometheus }}"
+#     access: proxy
+#     tls_skip_verify: true
 
-- name: Import Grafana dashboard Prometheus
-  community.grafana.grafana_dashboard:
-    state: present
-    grafana_url: "{{ url }}"
-    grafana_user: "{{ login }}"
-    grafana_password: "{{ password }}"
-    folder: General
-    dashboard_id: 15489
+# - name: Import Grafana dashboard Prometheus
+#   community.grafana.grafana_dashboard:
+#     state: present
+#     grafana_url: "{{ url }}"
+#     grafana_user: "{{ login }}"
+#     grafana_password: "{{ password }}"
+#     folder: General
+#     dashboard_id: 15489

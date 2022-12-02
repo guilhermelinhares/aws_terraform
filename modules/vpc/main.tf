@@ -289,15 +289,15 @@
    * https://registry.terraform.io/modules/terraform-aws-modules/security-group/aws/latest
   */
   resource "aws_security_group" "aws_security_group_efs" {
-    name        = var.name_security_group_efs
-    description = "Allow efs for Ec2 SGA inbound traffic"
-    vpc_id      = aws_vpc.main.id
+    name              = var.name_security_group_efs
+    description       = "Allow efs for Ec2 SGA inbound traffic"
+    vpc_id            = aws_vpc.main.id
 
     ingress {
-      description = "EFS - All protocols"
-      from_port   = 0
-      to_port     = 0
-      protocol    = "-1"
+      description     = "EFS - All protocols"
+      from_port       = 0
+      to_port         = 0
+      protocol        = "-1"
       security_groups = [aws_security_group.aws_security_group_ec2.id]
     }
 
@@ -310,7 +310,7 @@
     }
 
     tags = {
-      Name = "aws_security_group_sections"
+      Name  = "aws_security_group_sections"
     }
   }
 #endregion

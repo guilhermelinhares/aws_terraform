@@ -30,7 +30,7 @@
 
         tags = {
             Name                = "Elasticache"
-            Environment         = "Developer"
+            Environment         = "developer"
         }
     }
 #endregion

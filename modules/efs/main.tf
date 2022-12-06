@@ -10,7 +10,7 @@
     
     tags = {
       Name              = var.name_efs
-      Environment       = "Developer"
+      Environment       = "developer"
     }
   }
 #endregion

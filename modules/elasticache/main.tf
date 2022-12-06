@@ -27,6 +27,11 @@
         port                    = var.elasticache_port
         subnet_group_name       = aws_elasticache_subnet_group.elasticache_sbg.name
         az_mode                 = var.multi_az
+
+        Tags = {
+            Name                = "Elasticache"
+            Environment         = "Developer"
+        }
     }
 #endregion
 

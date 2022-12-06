@@ -21,7 +21,8 @@
       }
 
       tags = {
-        Environment = "lb_dev"
+        name        = "LB"
+        Environment = "developer"
       }
     }
   #endregion
@@ -159,7 +160,9 @@
       }
 
       tags = {
-        Name = "terraform_ec2-${count.index}"
+        Name        = "terraform_ec2-${count.index}"
+        Environment = "developer"
+        type        = "ec2"
       }
     }
   #endregion
@@ -214,6 +217,12 @@
       key_name                = var.key_aws_instance
       vpc_security_group_ids  = [var.aws_security_group_ec2]
 
+      tag_specifications {
+        resource_type = "instance"
+        tags = {
+          Name = "developer"
+        }
+      }
     }
   #endregion
 

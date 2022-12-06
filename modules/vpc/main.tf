@@ -7,7 +7,8 @@
     instance_tenancy      = "default"
     enable_dns_hostnames  = true # flag to enable/disable
     tags = {
-      Name = "main"
+      Name                 = "Vpc_main"
+      Environment          = "developer"
     }
   }
 #endregion
@@ -25,6 +26,7 @@
 
     tags = {
       Name                    = "Main-Public-AZ-A"
+      Environment             = "developer"
     }
   }
   resource "aws_subnet" "main_public_subnet_b" {
@@ -34,7 +36,8 @@
     availability_zone         = "${var.region}b"
 
     tags = {
-      Name = "Main-Public-AZ-B"
+      Name                    = "Main-Public-AZ-B"
+      Environment             = "developer"
     }
   }
   resource "aws_subnet" "main_private_subnet_a" {
@@ -44,7 +47,8 @@
     availability_zone         = "${var.region}a"
 
     tags = {
-      Name = "Main-Private-AZ-A"
+      Name                    = "Main-Private-AZ-A"
+      Environment             = "developer"
     }
   }
   resource "aws_subnet" "main_private_subnet_b" {
@@ -54,7 +58,8 @@
     availability_zone         = "${var.region}b"
 
     tags = {
-      Name = "Main-Private-AZ-B"
+      Name                    = "Main-Private-AZ-B"
+      Environment             = "developer"
     }
   }
 #endregion
@@ -66,7 +71,8 @@
   resource "aws_internet_gateway" "gw" {
     vpc_id = aws_vpc.main.id
     tags = {
-      Name = "NatGW-Main"
+      Name        = "NatGW-Main"
+      Environment = "developer"
     }
   }
 #endregion
@@ -94,7 +100,8 @@
     }
 
     tags = {
-      Name = "Public"
+      Name        = "Public"
+      Environment = "developer"
     }
   }
   resource "aws_route_table" "private" {
@@ -103,7 +110,8 @@
     route = []
 
     tags = {
-      Name = "Private"
+      Name        = "Private"
+      Environment = "developer"
     }
   }
 #endregion
@@ -214,7 +222,8 @@
     }
 
     tags = {
-      Name = "aws_security_group_ec2"
+      Name        = "aws_security_group_ec2"
+      Environment = "developer"
     }
   }
 #endregion
@@ -245,7 +254,8 @@
       }
 
       tags = {
-          Name = "aws_security_group_rds"
+        Name        = "aws_security_group_rds"
+        Environment = "developer"
       }
     }
 #endregion
@@ -277,7 +287,8 @@
     }
 
     tags = {
-      Name = "aws_security_group_sections"
+      Name        = "aws_security_group_sections"
+      Environment = "developer"
     }
   }
 #endregion
@@ -310,7 +321,8 @@
     }
 
     tags = {
-      Name  = "aws_security_group_sections"
+      Name        = "aws_security_group_sections"
+      Environment = "developer"
     }
   }
 #endregion

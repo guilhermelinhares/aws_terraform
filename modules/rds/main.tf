@@ -4,11 +4,12 @@
      * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/db_subnet_group
     */
     resource "aws_db_subnet_group" "rds_sub_groups" {
-        name       = "sub_gp_rds"
-        subnet_ids = var.subnet_ids
+        name            = "sub_gp_rds"
+        subnet_ids      = var.subnet_ids
 
         tags = {
-          Name = "Main DB Private Sub AZ-A+B"
+            Name        = "Main DB Private Sub AZ-A+B"
+            Environment = "developer"
         }
     }
 #endregion
@@ -45,6 +46,11 @@
         port                    = var.rds_port
         vpc_security_group_ids  = [var.aws_security_group_rds]
         db_subnet_group_name    = aws_db_subnet_group.rds_sub_groups.id
+
+        tags = {
+           Name                = "RDS"
+           Environment          = "developer"
+        }
     }
 #endregion
 

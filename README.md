@@ -12,6 +12,7 @@ The proposite project is create a multiple services in aws with terraform for a 
 * Security Groups
 * Load Balancer
 * Auto-Scaling 
+* Lanch Template
 * RDS + Generate a random database password
 * EC2 with Mult-AZ
 * Elasticache with a Memcached 

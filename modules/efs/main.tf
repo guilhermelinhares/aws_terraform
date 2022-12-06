@@ -9,7 +9,8 @@
     throughput_mode     = var.th_mode
     
     tags = {
-        Name = var.name_efs
+      Name              = var.name_efs
+      Environment       = "Developer"
     }
   }
 #endregion

@@ -64,3 +64,7 @@ module "ec2_instance" {
 
   depends_on                = [module.vpc,module.rds, module.elasticache, module.efs]
 }
+
+module "s3" {
+  source                    = "./modules/s3"
+}

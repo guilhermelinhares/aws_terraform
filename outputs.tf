@@ -23,7 +23,6 @@
     description     = "SG RDS ID"
     value = module.vpc.aws_security_group_rds_id
   }
-
 #endregion
 
 #region - Output Module Ec2
@@ -77,5 +76,18 @@ output "endpoint" {
   output "dns_name" {
     description   = "Name of DNS EFS"
     value         = module.efs.dns_name
+  }
+#endregion
+
+
+#region - Output Module S3
+  output "web_s3_endpoint" {
+    description     = "Website Endpoint Bucket S3"
+    value           =  module.s3.web_s3_endpoint
+  }
+
+  output "cn_domain_name" {
+    description = "CloudFront Domain"
+    value = module.s3.cn_domain_name
   }
 #endregion

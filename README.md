@@ -17,6 +17,7 @@ The proposite project is create a multiple services in aws with terraform for a 
 * EC2 with Mult-AZ
 * Elasticache with a Memcached 
 * EFS
+* S3(Static website) + Cloudfront
 
 ### Ansible:
 

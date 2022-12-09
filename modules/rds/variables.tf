@@ -4,7 +4,7 @@ variable "rds_instance_identifier" {
 }
 
 variable "subnet_ids" {
-  description   = "Subnet_ID"
+  description   = "Subnet_IDs"
   type          = list    
 }
 

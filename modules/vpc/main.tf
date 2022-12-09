@@ -77,16 +77,6 @@
   }
 #endregion
 
-#region Create a main route and associate with a vpc 
-  /**
-   *  https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/main_route_table_association
-  */
-  resource "aws_main_route_table_association" "public" {
-    vpc_id         = aws_vpc.main.id
-    route_table_id = aws_route_table.public.id
-  }
-#endregion
-
 #region Create a routes tables public and private
   /**
    * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table
@@ -115,6 +105,17 @@
     }
   }
 #endregion
+
+#region Create a main route and associate with a vpc 
+  /**
+   *  https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/main_route_table_association
+  */
+  resource "aws_main_route_table_association" "public" {
+    vpc_id         = aws_vpc.main.id
+    route_table_id = aws_route_table.public.id
+  }
+#endregion
+
 
 #region Association subnets in route tables
   /**
@@ -321,7 +322,7 @@
     }
 
     tags = {
-      Name        = "aws_security_group_sections"
+      Name        = "aws_security_group_efs"
       Environment = "developer"
     }
   }

@@ -143,7 +143,7 @@
      * https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_cache_policy
     */
     resource "aws_cloudfront_cache_policy" "cn_cache_policy" {
-        name        = "Custom - CachingOptimized"
+        name        = "Custom-CachingOptimized"
         comment     = "This policy is designed to optimize cache efficiency by minimizing the values that CloudFront includes in the cache key"
         default_ttl = 86400 #(24 hours).
         max_ttl     = 31536000 #(365 days).

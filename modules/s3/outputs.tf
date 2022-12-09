@@ -7,7 +7,7 @@
 
 #region - CloudFront
     output "cn_domain_name" {
-        description = "CloudFront Domain"
+        description = "CloudFront Domain Name"
         value       = aws_cloudfront_distribution.s3_distribution.domain_name
     }
 

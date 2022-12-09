@@ -79,7 +79,6 @@ output "endpoint" {
   }
 #endregion
 
-
 #region - Output Module S3
   output "web_s3_endpoint" {
     description     = "Website Endpoint Bucket S3"
